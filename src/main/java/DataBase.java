@@ -1,3 +1,5 @@
+import org.json.simple.JSONObject;
+
 import javax.swing.*;
 import java.sql.*;
 import java.util.Vector;
@@ -41,8 +43,37 @@ public class DataBase {
         }
     }
 
-    public static void setQuery(String query) {
+    public static Vector setSelectQuery(SearchType type, String search) {
+        String query = "";
+        switch (type){
+            case FNAME:
+                query = "SELECT lname, fname, mname, phone FROM CPHONES WHERE fname LIKE '%" + search + "%'";
+                break;
+            case LNAME:
+                query = "SELECT lname, fname, mname, phone FROM CPHONES WHERE lname LIKE '%" + search + "%'";
+                break;
+            case MNAME:
+                query = "SELECT lname, fname, mname, phone FROM CPHONES WHERE mname LIKE '%" + search + "%'";
+                break;
+            case PHONE:
+                query = "SELECT lname, fname, mname, phone FROM CPHONES WHERE phone LIKE '%" + search + "%'";
+                break;
+        }
+        return getTableData(query);
+    }
+
+    public static void setDeleteQuery() {
+        String query = "DELETE FROM CPHONES";
         try {
+            statement.execute(query);
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e, "SQL Lite Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    public static void setInsertQuery(JSONObject json) {
+        try {
+            String query = "INSERT INTO CPHONES (lname, fname, mname, phone) VALUES ('" + json.get("lname") + "', '" + json.get("fname") + "', '" + json.get("patronymic") + "', '" + json.get("phone") + "')";
             statement.execute(query);
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e, "SQL Lite Error", JOptionPane.ERROR_MESSAGE);
