@@ -71,9 +71,6 @@ public class MainAppWindow extends JFrame {
 
         menuItemGetData.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if (DataBase.getRowsCount() != 0) {
-                    DataBase.setDeleteQuery();
-                }
                 for (int i = 0; i < getRowsFromSite; i++) {
                     JSONObject json = DataFromSite.getDataFromSite();
                     DataBase.setInsertQuery(json);
