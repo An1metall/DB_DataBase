@@ -1,6 +1,8 @@
 import org.json.simple.JSONObject;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.*;
 
@@ -43,12 +45,6 @@ public class MainAppWindow extends JFrame {
         // Bottom Panel
         final JPanel bottomPanel = new JPanel(new BorderLayout());
         add(bottomPanel, BorderLayout.SOUTH);
-        JPanel bottomRightPanel = new JPanel(new FlowLayout());
-        bottomPanel.add(bottomRightPanel, BorderLayout.EAST);
-        JButton jb2 = new JButton("Найти");
-        bottomRightPanel.add(jb2);
-        JButton jb3 = new JButton("Очистить фильтр");
-        bottomRightPanel.add(jb3);
         String[] comboboxItemsList = {"Имя", "Фамилия", "Отчество", "Телефон"};
         final JComboBox comboBox = new JComboBox(comboboxItemsList);
         comboBox.setSelectedIndex(0);
@@ -76,12 +72,11 @@ public class MainAppWindow extends JFrame {
         menuItemGetData.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (DataBase.getRowsCount() != 0) {
-                    DataBase.setQuery("DELETE FROM CPHONES");
+                    DataBase.setDeleteQuery();
                 }
                 for (int i = 0; i < getRowsFromSite; i++) {
                     JSONObject json = DataFromSite.getDataFromSite();
-                    String query = "INSERT INTO CPHONES (lname, fname, mname, phone) VALUES ('" + json.get("lname") + "', '" + json.get("fname") + "', '" + json.get("patronymic") + "', '" + json.get("phone") + "')";
-                    DataBase.setQuery(query);
+                    DataBase.setInsertQuery(json);
                 }
                 updateTableModel();
             }
@@ -89,46 +84,40 @@ public class MainAppWindow extends JFrame {
 
         menuItemDeleteData.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                DataBase.setQuery("DELETE FROM CPHONES");
+                DataBase.setDeleteQuery();
                 updateTableModel();
             }
         });
 
         comboBox.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if (comboBox.getSelectedIndex() == 0) {searchType = SearchType.FNAME;}
-                if (comboBox.getSelectedIndex() == 1) {searchType = SearchType.LNAME;}
-                if (comboBox.getSelectedIndex() == 2) {searchType = SearchType.MNAME;}
-                if (comboBox.getSelectedIndex() == 3) {searchType = SearchType.PHONE;}
-            }
-        });
-
-        jb2.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                String query = "";
-                switch (searchType){
-                    case FNAME:
-                        query = "SELECT lname, fname, mname, phone FROM CPHONES WHERE fname LIKE '%" + textField.getText() + "%'";
-                        break;
-                    case LNAME:
-                        query = "SELECT lname, fname, mname, phone FROM CPHONES WHERE lname LIKE '%" + textField.getText() + "%'";
-                        break;
-                    case MNAME:
-                        query = "SELECT lname, fname, mname, phone FROM CPHONES WHERE mname LIKE '%" + textField.getText() + "%'";
-                        break;
-                    case PHONE:
-                        query = "SELECT lname, fname, mname, phone FROM CPHONES WHERE phone LIKE '%" + textField.getText() + "%'";
-                        break;
+                textField.setText("");
+                if (comboBox.getSelectedIndex() == 0) {
+                    searchType = SearchType.FNAME;
                 }
-                updateTableModel(query);
+                if (comboBox.getSelectedIndex() == 1) {
+                    searchType = SearchType.LNAME;
+                }
+                if (comboBox.getSelectedIndex() == 2) {
+                    searchType = SearchType.MNAME;
+                }
+                if (comboBox.getSelectedIndex() == 3) {
+                    searchType = SearchType.PHONE;
+                }
             }
         });
 
-        jb3.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                updateTableModel();
+        textField.getDocument().addDocumentListener(new DocumentListener() {
+            public void insertUpdate(DocumentEvent e) {
+                doSeatch(textField.getText());
+            }
+
+            public void removeUpdate(DocumentEvent e) {
+                doSeatch(textField.getText());
+            }
+
+            public void changedUpdate(DocumentEvent e) {
+                doSeatch(textField.getText());
             }
         });
 
@@ -143,13 +132,13 @@ public class MainAppWindow extends JFrame {
         // LISTENERS END
     }
 
-    private void updateTableModel() {
-        tableModel.setCache(DataBase.getTableData());
+    private void doSeatch(String search){
+        tableModel.setCache(DataBase.setSelectQuery(searchType, search));
         tableModel.fireTableDataChanged();
     }
 
-    private void updateTableModel(String query) {
-        tableModel.setCache(DataBase.getTableData(query));
+    private void updateTableModel() {
+        tableModel.setCache(DataBase.getTableData());
         tableModel.fireTableDataChanged();
     }
 }
