@@ -161,15 +161,15 @@ public class MainAppWindow extends JFrame {
 
         textField.getDocument().addDocumentListener(new DocumentListener() {
             public void insertUpdate(DocumentEvent e) {
-                doSeatch(textField.getText());
+                doSearch(textField.getText());
             }
 
             public void removeUpdate(DocumentEvent e) {
-                doSeatch(textField.getText());
+                doSearch(textField.getText());
             }
 
             public void changedUpdate(DocumentEvent e) {
-                doSeatch(textField.getText());
+                doSearch(textField.getText());
             }
         });
 
@@ -184,7 +184,7 @@ public class MainAppWindow extends JFrame {
         // LISTENERS END
     }
 
-    private void doSeatch(String search){
+    private void doSearch(String search){
         tableModel.setCache(DataBase.setSelectQuery(searchType, search));
         tableModel.fireTableDataChanged();
     }

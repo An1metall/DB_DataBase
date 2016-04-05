@@ -10,7 +10,7 @@ public class MainClass {
     public static void main(String[] args) throws IOException {
         if (DataBase.connect(dataBaseUrl)) {
             DataBase.getTableData();
-            MainAppWindow w = new MainAppWindow();
+            mainAppWindow = new MainAppWindow();
         }
     }
 }
