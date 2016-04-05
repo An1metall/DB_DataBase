@@ -3,14 +3,16 @@ import org.json.simple.JSONObject;
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.text.MaskFormatter;
+
 import java.awt.*;
 import java.awt.event.*;
 
 public class MainAppWindow extends JFrame {
 
     private static QueryTableModel tableModel = new QueryTableModel();
-    private static int getRowsFromSite = 20;
     private static SearchType searchType = SearchType.FNAME;
+    private static int getRowsFromSite = 0;
 
     public MainAppWindow() throws HeadlessException {
         //Main Window
@@ -59,7 +61,30 @@ public class MainAppWindow extends JFrame {
 
         menuItemAbout.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                new AboutWindow();
+                final JDialog frame = new JDialog(MainClass.mainAppWindow, "Добавить данные в БД", true);
+                frame.setSize(400, 60);
+                frame.setLocationRelativeTo(MainClass.mainAppWindow);
+                frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+                frame.setResizable(false);
+                frame.setAlwaysOnTop(true);
+                frame.setUndecorated(true);
+
+                JPanel jp = new JPanel(new FlowLayout());
+                frame.add(jp);
+                JLabel label1 = new JLabel("Спасибо порталу GeekBrains.ru за обучение!");
+                jp.add(label1, BorderLayout.CENTER);
+                JLabel label2 = new JLabel("Спасибо порталу randus.ru за генератор случайных данных!");
+                jp.add(label2, BorderLayout.CENTER);
+                jp.setBackground(Color.LIGHT_GRAY);
+
+                frame.addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                        frame.dispose();
+                    }
+                });
+
+                frame.setVisible(true);
             }
         });
 
@@ -71,11 +96,41 @@ public class MainAppWindow extends JFrame {
 
         menuItemGetData.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                for (int i = 0; i < getRowsFromSite; i++) {
-                    JSONObject json = DataFromSite.getDataFromSite();
-                    DataBase.setInsertQuery(json);
+
+                final JDialog frame = new JDialog(MainClass.mainAppWindow, "Добавить данные в БД", true);
+                JPanel panel = new JPanel(new BorderLayout());
+                frame.getContentPane().add(panel);
+                frame.pack();
+                frame.setSize(200, 100);
+                frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+                frame.setLocationRelativeTo(MainClass.mainAppWindow);
+                JLabel label = new JLabel("Добавить записей: ");
+                final JFormattedTextField field = new JFormattedTextField(createFormatter("##"));
+                field.setText("20");
+                JButton jb = new JButton("OK");
+                frame.add(label, BorderLayout.WEST);
+                frame.add(field);
+                frame.add(jb, BorderLayout.EAST);
+
+                jb.addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                        try {
+                            getRowsFromSite = Integer.parseInt(field.getText());
+                        } catch (NumberFormatException ev){}
+                        frame.dispose();
+                    }
+                });
+
+                frame.setVisible(true);
+
+                if (getRowsFromSite > 0){
+                    for (int i = 0; i < getRowsFromSite; i++) {
+                        JSONObject json = DataFromSite.getDataFromSite();
+                        DataBase.setInsertQuery(json);
+                    }
+                    updateTableModel();
                 }
-                updateTableModel();
             }
         });
 
@@ -137,5 +192,14 @@ public class MainAppWindow extends JFrame {
     private void updateTableModel() {
         tableModel.setCache(DataBase.getTableData());
         tableModel.fireTableDataChanged();
+    }
+
+    protected MaskFormatter createFormatter(String s) {
+        MaskFormatter formatter = null;
+        try {
+            formatter = new MaskFormatter(s);
+        } catch (java.text.ParseException exc) {
+        }
+        return formatter;
     }
 }
