@@ -97,11 +97,12 @@ public class MainAppWindow extends JFrame {
         menuItemGetData.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
 
-                final JDialog frame = new JDialog(MainClass.getMainAppWindow(), "Добавить данные в БД", true);
+                final JDialog frame = new JDialog(MainClass.getMainAppWindow(), "Добавить данные", true);
                 JPanel panel = new JPanel(new BorderLayout());
                 frame.getContentPane().add(panel);
-                frame.pack();
-                frame.setSize(200, 100);
+                frame.setSize(200, 80);
+                frame.setResizable(false);
+                frame.setAlwaysOnTop(true);
                 frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
                 frame.setLocationRelativeTo(MainClass.getMainAppWindow());
                 JLabel label = new JLabel("Добавить записей: ");
