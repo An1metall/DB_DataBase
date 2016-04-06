@@ -43,9 +43,9 @@ public class DataBase {
         }
     }
 
-    public static Vector setSelectQuery(SearchType type, String search) {
+    public static Vector setSelectQuery(SearchTableColumn column, String search) {
         String query = "";
-        switch (type){
+        switch (column){
             case FNAME:
                 query = "SELECT lname, fname, mname, phone FROM CPHONES WHERE fname LIKE '%" + search + "%'";
                 break;

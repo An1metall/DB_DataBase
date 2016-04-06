@@ -11,7 +11,7 @@ import java.awt.event.*;
 public class MainAppWindow extends JFrame {
 
     private static QueryTableModel tableModel = new QueryTableModel();
-    private static SearchType searchType = SearchType.FNAME;
+    private static SearchTableColumn searchTableColumn = SearchTableColumn.FNAME;
     private static int getRowsFromSite = 0;
 
     public MainAppWindow() throws HeadlessException {
@@ -145,16 +145,16 @@ public class MainAppWindow extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 textField.setText("");
                 if (comboBox.getSelectedIndex() == 0) {
-                    searchType = SearchType.FNAME;
+                    searchTableColumn = SearchTableColumn.FNAME;
                 }
                 if (comboBox.getSelectedIndex() == 1) {
-                    searchType = SearchType.LNAME;
+                    searchTableColumn = SearchTableColumn.LNAME;
                 }
                 if (comboBox.getSelectedIndex() == 2) {
-                    searchType = SearchType.MNAME;
+                    searchTableColumn = SearchTableColumn.MNAME;
                 }
                 if (comboBox.getSelectedIndex() == 3) {
-                    searchType = SearchType.PHONE;
+                    searchTableColumn = SearchTableColumn.PHONE;
                 }
             }
         });
@@ -185,7 +185,7 @@ public class MainAppWindow extends JFrame {
     }
 
     private void doSearch(String search){
-        tableModel.setCache(DataBase.setSelectQuery(searchType, search));
+        tableModel.setCache(DataBase.setSelectQuery(searchTableColumn, search));
         tableModel.fireTableDataChanged();
     }
 

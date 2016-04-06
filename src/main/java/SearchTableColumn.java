@@ -1,3 +1,3 @@
-public enum SearchType {
+public enum SearchTableColumn {
     FNAME, LNAME, MNAME, PHONE
 }
