@@ -105,6 +105,8 @@ public class DataBase {
         return getTableData(defQuery);
     }
 
+    // GETTERS
+
     public static int getColumnsCount() {
         return columnsCount;
     }
@@ -112,4 +114,6 @@ public class DataBase {
     public static int getRowsCount() {
         return rowsCount;
     }
+
+    // GETTERS END
 }

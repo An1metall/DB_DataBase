@@ -27,7 +27,11 @@ public class QueryTableModel extends AbstractTableModel {
         return ((String[])cache.elementAt(row))[col];
     }
 
+    // SETTERS
+
     public void setCache(Vector cache) {
         this.cache = cache;
     }
+
+    // SETTERS END
 }
