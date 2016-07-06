@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tables>
+    <table>
+        <table_name>purchases</table_name>
+        <attribute>
+            <name>id</name>
+            <type>INTEGER</type>
+            <parameter>PRIMARY KEY</parameter>
+            <parameter>ASC</parameter>
+            <parameter>AUTOINCREMENT</parameter>
+        </attribute>
+        <attribute>
+            <name>purchase_list_id</name>
+            <type>INTEGER</type>
+            <parameter>NOT NULL</parameter>
+        </attribute>
+        <attribute>
+            <name>description</name>
+            <type>TEXT</type>
+            <parameter>NOT NULL</parameter>
+        </attribute>
+        <attribute>
+            <name>cost</name>
+            <type>INTEGER</type>
+        </attribute>
+        <attribute>
+            <name>done</name>
+            <type>INTEGER</type>
+            <parameter>NOT NULL</parameter>
+            <parameter>DEFAULT 0</parameter>
+        </attribute>
+    </table>
+</tables>
