@@ -14,13 +14,13 @@ public class XmlHandler {
 
     private static final String ns = null;
 
-    public static List<String> parseToQuery(InputStream in) throws XmlPullParserException, IOException {
+    public static String parseToQueryString(InputStream in) throws XmlPullParserException, IOException {
         try {
             XmlPullParser parser = Xml.newPullParser();
             parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
             parser.setInput(in, null);
             parser.nextTag();
-            return readData(parser);
+            return readTable(parser);
         } finally {
             in.close();
         }
@@ -41,23 +41,6 @@ public class XmlHandler {
                     break;
             }
         }
-    }
-
-    private static List<String> readData(XmlPullParser parser) throws XmlPullParserException, IOException {
-        List<String> tables = new ArrayList<>();
-        parser.require(XmlPullParser.START_TAG, ns, Manifest.XML_ROOT);
-        while (parser.next() != XmlPullParser.END_TAG) {
-            if (parser.getEventType() != XmlPullParser.START_TAG) {
-                continue;
-            }
-            String name = parser.getName();
-            if (name.equals(Manifest.XML_ENTITY)) {
-                tables.add(readTable(parser));
-            } else {
-                skip(parser);
-            }
-        }
-        return tables;
     }
 
     private static String readTable(XmlPullParser parser) throws XmlPullParserException, IOException {

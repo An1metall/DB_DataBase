@@ -1,19 +1,19 @@
 package com.an1metall.gb_a_database;
 
 public class Purchase {
-    int _id, _cost;
-    String _name;
-    Boolean _done = false;
+    private int _id, _cost;
+    private String _description;
+    private Boolean _done = false;
 
-    public Purchase(int _id, String _name, int _cost) {
+    public Purchase(int _id, String _description, int _cost) {
         this._id = _id;
-        this._name = _name;
+        this._description = _description;
         this._cost = _cost;
     }
 
-    public Purchase(String _name, int _cost) {
+    public Purchase(String _description, int _cost) {
         this._cost = _cost;
-        this._name = _name;
+        this._description = _description;
     }
 
     public int get_id() {
@@ -32,12 +32,12 @@ public class Purchase {
         this._cost = _cost;
     }
 
-    public String get_name() {
-        return _name;
+    public String get_description() {
+        return _description;
     }
 
-    public void set_name(String _name) {
-        this._name = _name;
+    public void set_description(String _description) {
+        this._description = _description;
     }
 
     public Boolean get_done() {
