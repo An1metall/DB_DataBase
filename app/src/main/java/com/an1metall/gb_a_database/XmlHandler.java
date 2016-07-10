@@ -7,8 +7,6 @@ import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
 
 public class XmlHandler {
 
@@ -54,7 +52,11 @@ public class XmlHandler {
             String name = parser.getName();
             switch (name) {
                 case Manifest.XML_ENTITY_ATTRIBUTE:
-                    tableParameters = tableParameters + ", " + readEntry(parser);
+                    if (tableParameters == null) {
+                        tableParameters = readEntry(parser);
+                    } else {
+                        tableParameters = tableParameters + ", " + readEntry(parser);
+                    }
                     break;
                 case Manifest.XML_ENTITY_NAME:
                     tableName = readText(parser, name);
@@ -63,12 +65,11 @@ public class XmlHandler {
                     skip(parser);
             }
         }
-        tableParameters = tableParameters.substring(2);
         return "CREATE TABLE " + tableName + " (" + tableParameters + ")";
     }
 
     private static String readEntry(XmlPullParser parser) throws XmlPullParserException, IOException {
-        parser.require(XmlPullParser.START_TAG, ns, "table");
+        parser.require(XmlPullParser.START_TAG, ns, Manifest.XML_ENTITY_ATTRIBUTE);
         String result = null;
 
         while (parser.next() != XmlPullParser.END_TAG) {
@@ -80,14 +81,15 @@ public class XmlHandler {
                 case Manifest.XML_ENTITY_ATTRIBUTE_NAME:
                 case Manifest.XML_ENTITY_ATTRIBUTE_TYPE:
                 case Manifest.XML_ENTITY_ATTRIBUTE_PARAMETER:
-                    result = result + " " + readText(parser, name);
+                    if (result == null) {
+                        result = readText(parser, name);
+                    } else {
+                        result = result + " " + readText(parser, name);
+                    }
                     break;
                 default:
                     skip(parser);
             }
-        }
-        if (result != null) {
-            result = result.substring(1);
         }
         return result;
     }
