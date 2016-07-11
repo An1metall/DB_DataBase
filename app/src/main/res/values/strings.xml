@@ -3,4 +3,5 @@
     <string name="rvitem_cost_label">cost:</string>
     <string name="activity_main_total_cost_label">total cost:</string>
     <string name="menu_main_action_add">Add purchase</string>
+    <string name="menu_main_action_wipe">Add purchase</string>
 </resources>

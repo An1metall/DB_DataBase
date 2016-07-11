@@ -10,4 +10,12 @@
         android:onClick="onClickMenuItem"
         />
 
+    <item
+        android:title="@string/menu_main_action_wipe"
+        android:id="@+id/menu_main_action_wipe"
+        android:icon="@android:drawable/ic_menu_close_clear_cancel"
+        app:showAsAction="always"
+        android:onClick="onClickMenuItem"
+        />
+
 </menu>
