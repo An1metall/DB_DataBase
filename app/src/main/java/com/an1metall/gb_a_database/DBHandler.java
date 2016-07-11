@@ -45,11 +45,10 @@ public class DBHandler extends SQLiteOpenHelper {
     }
 
     public Cursor getAllData() {
-        Cursor result = db.query(Manifest.DATABASE_TABLE_NAME, Manifest.DATABASE_ALL_COLUMNS, null, null, null, null, null);
-        return result;
+        return db.query(Manifest.DATABASE_TABLE_NAME, Manifest.DATABASE_ALL_COLUMNS, null, null, null, null, null);
     }
 
-    public boolean insertEntry(String description, String cost, boolean done) {
+    public boolean insertEntry(String description, int cost, int done) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(Manifest.DATABASE_KEY_DESCRIPTION, description);
         contentValues.put(Manifest.DATABASE_KEY_COST, cost);

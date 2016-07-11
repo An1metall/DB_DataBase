@@ -7,12 +7,14 @@ import android.widget.TextView;
 
 public class RVViewHolder extends RecyclerView.ViewHolder {
 
-    private LinearLayout rvItem;
-    private TextView purchaseDescription;
+    LinearLayout rvItem;
+    TextView purchaseDescription;
+    TextView purchaseCost;
 
     public RVViewHolder(View itemView) {
         super(itemView);
         rvItem = (LinearLayout) itemView.findViewById(R.id.rv_item_view);
         purchaseDescription = (TextView) itemView.findViewById(R.id.rv_item_purchase_description);
+        purchaseCost = (TextView) itemView.findViewById(R.id.rv_item_purchase_cost);
     }
 }

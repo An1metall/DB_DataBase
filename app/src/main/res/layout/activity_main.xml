@@ -5,16 +5,47 @@
     android:layout_height="match_parent"
     tools:context="com.an1metall.gb_a_database.MainActivity">
 
-    <include layout="@layout/header_layout"
-        android:id="@+id/include_header"/>
+    <include
+        android:id="@+id/include_header"
+        layout="@layout/header_layout" />
 
     <android.support.v7.widget.RecyclerView
 
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/include_header"
+        android:layout_above="@+id/linearLayout"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"/>
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/include_header" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:background="@color/colorPrimaryLight"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        android:padding="4dp">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/activity_main_total_cost_label"
+            android:textAllCaps="true" />
+
+        <TextView
+            android:id="@+id/activity_main_total_cost_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="4dp"
+            android:maxLines="1"
+            android:text="0"
+            android:textColor="@color/colorPrimaryText" />
+    </LinearLayout>
 
 </RelativeLayout>

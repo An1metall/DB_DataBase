@@ -9,6 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class RVCursorAdapter extends RecyclerView.Adapter<RVViewHolder> {
 
@@ -17,20 +20,18 @@ public class RVCursorAdapter extends RecyclerView.Adapter<RVViewHolder> {
     private boolean dataValid;
     private int rowIdColumn;
     private DataSetObserver dataSetObserver;
+    private List<Purchase> items;
 
     public RVCursorAdapter(Context context, Cursor cursor) throws NullPointerException {
         this.context = context;
         this.cursor = cursor;
         dataValid = cursor != null;
+        items = new ArrayList<>();
         rowIdColumn = dataValid ? cursor.getColumnIndex(Manifest.DATABASE_KEY_ID) : -1;
         dataSetObserver = new NotifyingDataSetObserver();
         if (cursor != null) {
             cursor.registerDataSetObserver(dataSetObserver);
         }
-    }
-
-    public Cursor getCursor(){
-        return cursor;
     }
 
     @Override
@@ -47,6 +48,10 @@ public class RVCursorAdapter extends RecyclerView.Adapter<RVViewHolder> {
         if (!cursor.moveToPosition(position)) {
             throw new IllegalStateException("Couldn't move cursor to position " + position);
         }
+        Purchase item = Purchase.formCursor(cursor);
+
+        holder.purchaseDescription.setText(item.get_description());
+        holder.purchaseCost.setText(String.valueOf(item.get_cost()));
     }
 
     @Override

@@ -20,7 +20,7 @@ public class Purchase {
             int id = cursor.getInt(cursor.getColumnIndex(Manifest.DATABASE_KEY_ID));
             int cost = cursor.getInt(cursor.getColumnIndex(Manifest.DATABASE_KEY_COST));
             String description = cursor.getString(cursor.getColumnIndex(Manifest.DATABASE_KEY_DESCRIPTION));
-            int done = cursor.getInt(cursor.getColumnIndex(Manifest.DATABASE_KEY_COST));
+            int done = cursor.getInt(cursor.getColumnIndex(Manifest.DATABASE_KEY_DONE));
             return new Purchase(id, description, cost, done);
         }
         return null;
