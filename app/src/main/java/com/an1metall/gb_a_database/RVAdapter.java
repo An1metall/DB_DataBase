@@ -10,6 +10,8 @@ import com.an1metall.gb_a_database.databinding.RvItemBinding;
 
 import java.util.List;
 
+import co.dift.ui.SwipeToAction;
+
 public class RVAdapter extends RecyclerView.Adapter<RVAdapter.RVViewHolder> {
 
     List<Purchase> items;
@@ -25,7 +27,8 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.RVViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(RVViewHolder holder, int position) {;
+    public void onBindViewHolder(RVViewHolder holder, int position) {
+        holder.data = items.get(position);
         holder.binding.setPurchase(items.get(position));
     }
 
@@ -34,7 +37,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.RVViewHolder> {
         return items.size();
     }
 
-    public class RVViewHolder extends RecyclerView.ViewHolder {
+    public class RVViewHolder extends SwipeToAction.ViewHolder<Purchase> {
 
         RvItemBinding binding;
 

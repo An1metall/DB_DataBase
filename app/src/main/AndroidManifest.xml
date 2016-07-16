@@ -20,7 +20,7 @@
             android:name=".MyContentProvider"
             android:authorities="com.an1metall.gb_a_database.provider"
             android:enabled="true"
-            android:exported="true"></provider>
+            android:exported="true"/>
     </application>
 
 </manifest>

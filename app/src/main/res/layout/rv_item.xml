@@ -5,53 +5,98 @@
         <variable
             name="purchase"
             type="com.an1metall.gb_a_database.Purchase" />
+
     </data>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/rv_item_view"
+    <FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/rv_item_purchase_description"
-            android:text="@{purchase._description}"
+        <RelativeLayout
+            android:tag="reveal-right"
+            android:background="@color/colorAccent"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAllCaps="true"
-            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
-            android:textColor="@color/colorPrimaryText"
-            android:textStyle="bold"
-            tools:text="purchase description" />
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:src="@android:drawable/ic_menu_edit"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:tag="reveal-left"
+            android:background="@color/colorWarning"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="20dp"
+                android:src="@android:drawable/ic_menu_delete"/>
+        </RelativeLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:tag="front"
+            android:id="@+id/rv_item_view"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:gravity="bottom"
-            android:orientation="horizontal">
+            android:orientation="vertical"
+            android:background="@android:color/white"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingTop="16dp">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:id="@+id/rv_item_purchase_description"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/rvitem_cost_label"
+                android:text="@{purchase._description}"
                 android:textAllCaps="true"
-                android:textColor="@color/colorSecondaryText" />
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+                android:textColor="@color/colorPrimaryText"
+                android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/rv_item_purchase_cost"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:layout_marginStart="8dp"
-                android:maxLines="1"
-                android:textColor="@color/colorSecondaryText"
-                android:text="@{String.valueOf(purchase._cost)}"
-                tools:text="10000" />
+                android:layout_marginTop="4dp"
+                android:gravity="bottom"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/rvitem_cost_label"
+                    android:textAllCaps="true"
+                    android:textColor="@color/colorSecondaryText" />
+
+                <TextView
+                    android:id="@+id/rv_item_purchase_cost"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="8dp"
+                    android:maxLines="1"
+                    android:text="@{String.valueOf(purchase._cost)}"
+                    android:textColor="@color/colorSecondaryText" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginTop="16dp"
+                android:background="@color/colorDivider" />
+
         </LinearLayout>
 
-    </LinearLayout>
-
+    </FrameLayout>
 </layout>
