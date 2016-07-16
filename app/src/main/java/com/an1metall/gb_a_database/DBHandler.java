@@ -5,12 +5,15 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.databinding.ObservableArrayList;
+import android.databinding.ObservableList;
 
 import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
 
 public class DBHandler extends SQLiteOpenHelper {
 
@@ -48,8 +51,8 @@ public class DBHandler extends SQLiteOpenHelper {
         db.close();
     }
 
-    public List<Purchase> getAllData() {
-        List<Purchase> result = new ArrayList<>();
+    public ObservableList<Purchase> getAllData() {
+        ObservableList<Purchase> result = new ObservableArrayList<>();
         Cursor cursor = db.query(Manifest.DATABASE_TABLE_NAME, Manifest.DATABASE_ALL_COLUMNS, null, null, null, null, null);
         cursor.moveToFirst();
         while (cursor.moveToNext()){
@@ -60,7 +63,7 @@ public class DBHandler extends SQLiteOpenHelper {
         return result;
     }
 
-    public List<Purchase> wipeAllData(){
+    public ObservableList<Purchase> wipeAllData(){
         db.delete(Manifest.DATABASE_TABLE_NAME, null, null);
         return getAllData();
     }

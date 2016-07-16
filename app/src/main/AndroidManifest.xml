@@ -15,6 +15,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <provider
+            android:name=".MyContentProvider"
+            android:authorities="com.an1metall.gb_a_database.provider"
+            android:enabled="true"
+            android:exported="true"></provider>
     </application>
 
 </manifest>

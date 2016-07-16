@@ -6,7 +6,7 @@
         android:title="@string/menu_main_action_add"
         android:id="@+id/menu_main_action_add"
         android:icon="@android:drawable/ic_menu_add"
-        app:showAsAction="always"
+        app:showAsAction="ifRoom"
         android:onClick="onClickMenuItem"
         />
 
@@ -14,8 +14,15 @@
         android:title="@string/menu_main_action_wipe"
         android:id="@+id/menu_main_action_wipe"
         android:icon="@android:drawable/ic_menu_close_clear_cancel"
-        app:showAsAction="always"
+        app:showAsAction="ifRoom"
         android:onClick="onClickMenuItem"
         />
 
+    <item
+        android:title="@string/menu_main_action_update_data"
+        android:id="@+id/menu_main_action_update_data"
+        android:icon="@android:drawable/ic_menu_rotate"
+        app:showAsAction="ifRoom"
+        android:onClick="onClickMenuItem"
+        />
 </menu>

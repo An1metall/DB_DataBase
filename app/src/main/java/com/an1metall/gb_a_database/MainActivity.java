@@ -1,5 +1,6 @@
 package com.an1metall.gb_a_database;
 
+import android.databinding.ObservableList;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,8 +10,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-import java.util.List;
-
 public class MainActivity extends AppCompatActivity {
 
     private DBHandler db;
@@ -18,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private RVAdapter rvAdapter;
     private TextView totalCostText;
-    private List<Purchase> items;
+    private ObservableList<Purchase> items;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,10 +32,39 @@ public class MainActivity extends AppCompatActivity {
 
         items = db.getAllData();
         setTotalCostText();
+        items.addOnListChangedCallback(new ObservableList.OnListChangedCallback<ObservableList<Purchase>>() {
+            @Override
+            public void onChanged(ObservableList<Purchase> purchases) {
+                setTotalCostText();
+            }
+
+            @Override
+            public void onItemRangeChanged(ObservableList<Purchase> purchases, int i, int i1) {
+                rvAdapter.notifyItemRangeChanged(i, i1);
+                setTotalCostText();
+            }
+
+            @Override
+            public void onItemRangeInserted(ObservableList<Purchase> purchases, int i, int i1) {
+                rvAdapter.notifyItemRangeInserted(i, i1);
+                setTotalCostText();
+            }
+
+            @Override
+            public void onItemRangeMoved(ObservableList<Purchase> purchases, int i, int i1, int i2) {
+                setTotalCostText();
+            }
+
+            @Override
+            public void onItemRangeRemoved(ObservableList<Purchase> purchases, int i, int i1) {
+                rvAdapter.notifyItemRangeRemoved(i, i1);
+                setTotalCostText();
+            }
+        });
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        rvAdapter = new RVAdapter(this, items);
+        rvAdapter = new RVAdapter(items);
         recyclerView.setAdapter(rvAdapter);
     }
 
@@ -78,8 +106,9 @@ public class MainActivity extends AppCompatActivity {
                 items.clear();
                 items.addAll(db.wipeAllData());
                 break;
+            case R.id.menu_main_action_update_data:
+                rvAdapter.notifyDataSetChanged();
+                break;
         }
-        setTotalCostText();
-        rvAdapter.notifyDataSetChanged();
     }
 }
