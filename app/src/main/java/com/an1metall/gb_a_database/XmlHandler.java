@@ -44,21 +44,21 @@ public class XmlHandler {
     private static String readTable(XmlPullParser parser) throws XmlPullParserException, IOException {
         String tableName = null;
         String tableParameters = null;
-        parser.require(XmlPullParser.START_TAG, ns, Manifest.XML_ENTITY);
+        parser.require(XmlPullParser.START_TAG, ns, Contract.XML_ENTITY);
         while (parser.next() != XmlPullParser.END_TAG) {
             if (parser.getEventType() != XmlPullParser.START_TAG) {
                 continue;
             }
             String name = parser.getName();
             switch (name) {
-                case Manifest.XML_ENTITY_ATTRIBUTE:
+                case Contract.XML_ENTITY_ATTRIBUTE:
                     if (tableParameters == null) {
                         tableParameters = readEntry(parser);
                     } else {
                         tableParameters = tableParameters + ", " + readEntry(parser);
                     }
                     break;
-                case Manifest.XML_ENTITY_NAME:
+                case Contract.XML_ENTITY_NAME:
                     tableName = readText(parser, name);
                     break;
                 default:
@@ -69,7 +69,7 @@ public class XmlHandler {
     }
 
     private static String readEntry(XmlPullParser parser) throws XmlPullParserException, IOException {
-        parser.require(XmlPullParser.START_TAG, ns, Manifest.XML_ENTITY_ATTRIBUTE);
+        parser.require(XmlPullParser.START_TAG, ns, Contract.XML_ENTITY_ATTRIBUTE);
         String result = null;
 
         while (parser.next() != XmlPullParser.END_TAG) {
@@ -78,9 +78,9 @@ public class XmlHandler {
             }
             String name = parser.getName();
             switch (name) {
-                case Manifest.XML_ENTITY_ATTRIBUTE_NAME:
-                case Manifest.XML_ENTITY_ATTRIBUTE_TYPE:
-                case Manifest.XML_ENTITY_ATTRIBUTE_PARAMETER:
+                case Contract.XML_ENTITY_ATTRIBUTE_NAME:
+                case Contract.XML_ENTITY_ATTRIBUTE_TYPE:
+                case Contract.XML_ENTITY_ATTRIBUTE_PARAMETER:
                     if (result == null) {
                         result = readText(parser, name);
                     } else {

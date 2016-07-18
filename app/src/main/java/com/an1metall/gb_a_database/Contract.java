@@ -1,6 +1,8 @@
 package com.an1metall.gb_a_database;
 
-class Manifest {
+import android.net.Uri;
+
+class Contract {
 
     // Debug section
     public static final String LOG_TAG = "debugLog";
@@ -22,4 +24,18 @@ class Manifest {
     public static final String XML_ENTITY_ATTRIBUTE_NAME = "name";
     public static final String XML_ENTITY_ATTRIBUTE_TYPE = "type";
     public static final String XML_ENTITY_ATTRIBUTE_PARAMETER = "parameter";
+
+    // Content Provider section
+    public static final String CP_AUTHORITY = "com.an1metall.gb_a_database.provider";
+    public static final Uri CP_BASE_CONTENT_URI = Uri.parse("content://" + CP_AUTHORITY);
+    public static final int CP_ALL_PURCHASES = 100;
+    public static final int CP_PURCHASE = 101;
+
+    // Edit Dialog Fragment section
+    public static final String EDIT_DIALOG_FRAGMENT_MESSAGE_TAG = "EDIT_DIALOG_FRAGMENT_MESSAGE_TAG";
+    public static final String EDIT_DIALOG_FRAGMENT_TITLE_TAG = "EDIT_DIALOG_FRAGMENT_TITLE_TAG";
+    public static final String EDIT_DIALOG_FRAGMENT_DESCRIPTION = "EDIT_DIALOG_FRAGMENT_DESCRIPTION";
+    public static final String EDIT_DIALOG_FRAGMENT_COST = "EDIT_DIALOG_FRAGMENT_COST";
+    public static final String EDIT_DIALOG_FRAGMENT_TYPE_EDIT = "EDIT_PURCHASE";
+    public static final String EDIT_DIALOG_FRAGMENT_TYPE_CREATE = "CREATE_PURCHASE";
 }

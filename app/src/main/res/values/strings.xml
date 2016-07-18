@@ -1,7 +1,11 @@
 <resources>
     <string name="app_name">Purchases</string>
-    <string name="rvitem_cost_label">cost:</string>
+    <string name="rv_item_cost_label">cost:</string>
     <string name="activity_main_total_cost_label">total cost:</string>
+    <string name="edit_item_dialog_fragment_description">Description</string>
+    <string name="edit_item_dialog_fragment_cost">Cost</string>
+    <string name="edit_item_dialog_fragment_positive">OK</string>
+    <string name="edit_item_dialog_fragment_negative">Cancel</string>
     <string name="menu_main_action_add">Add purchase</string>
     <string name="menu_main_action_wipe">Wipe purchase</string>
     <string name="menu_main_action_update_data">Update data</string>

@@ -1,5 +1,7 @@
 package com.an1metall.gb_a_database;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.databinding.ObservableList;
 import android.graphics.Color;
 import android.support.design.widget.Snackbar;
@@ -12,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import co.dift.ui.SwipeToAction;
@@ -58,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
         totalCostText = (TextView) findViewById(R.id.activity_main_total_cost_text);
     }
 
-    private void setTotalCostText(){
+    private void setTotalCostText() {
         int result = 0;
         for (Purchase item : items) {
             result = result + item.get_cost();
@@ -66,14 +69,14 @@ public class MainActivity extends AppCompatActivity {
         totalCostText.setText(String.valueOf(result));
     }
 
-    private void setupRecyclerView(){
+    private void setupRecyclerView() {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         rvAdapter = new RVAdapter(items);
         recyclerView.setAdapter(rvAdapter);
         recyclerView.setHasFixedSize(true);
     }
 
-    private void initItems(){
+    private void initItems() {
         items = db.getAllData();
         items.addOnListChangedCallback(new ObservableList.OnListChangedCallback<ObservableList<Purchase>>() {
             @Override
@@ -106,17 +109,31 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void initSwipeToAction(){
+    private void initSwipeToAction() {
         swipeToAction = new SwipeToAction(recyclerView, new SwipeToAction.SwipeListener<Purchase>() {
             @Override
             public boolean swipeLeft(Purchase itemData) {
                 if (db.deleteEntry(itemData.get_id())) items.remove(itemData);
-                return false;
+                return true;
             }
 
             @Override
-            public boolean swipeRight(Purchase itemData) {
-                return false;
+            public boolean swipeRight(final Purchase itemData) {
+                final EditDialogFragment dialog = EditDialogFragment.newInstance("Edit Purchase", null, itemData.get_description(), String.valueOf(itemData.get_cost()), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        try {
+                            EditText description = (EditText) findViewById(R.id.edit_item_dialog_fragment_description);
+                            itemData.set_description(description.getEditableText().toString());
+                            EditText cost = (EditText) findViewById(R.id.edit_item_dialog_fragment_cost);
+                            itemData.set_cost(Integer.parseInt(cost.getEditableText().toString()));
+                        } catch (NullPointerException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+                dialog.show(getSupportFragmentManager(), Contract.EDIT_DIALOG_FRAGMENT_TYPE_EDIT);
+                return true;
             }
 
             @Override
